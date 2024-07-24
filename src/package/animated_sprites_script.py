@@ -8,8 +8,8 @@ class AnimatedSprite:
         self.animation_timer = 0
         self.animation_loop = True
         self.new_animation()
-        self.x = 100
-        self.y = 100
+        self.x = 0
+        self.y = 0
         self.current_animation = None
         
     def new_animation(self,name: str,spritesheet: pygame.Surface,
@@ -71,7 +71,7 @@ class AnimatedSprite:
     
     def finish_animation(self):
         self.set_animation(self.current_animation["end"])
-        self.update()
+        self.play_animation()
 
     def draw(self,screen):
         screen.blit(self.image,(self.rect.x+self.current_animation["offset"][0]-camera.x, self.rect.y+self.current_animation["offset"][1]-camera.y))
