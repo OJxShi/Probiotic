@@ -1,5 +1,4 @@
-import pygame, camera_script
-from camera_script import camera
+import pygame
 
 class AnimatedSprite:
     def __init__(self):
@@ -7,11 +6,12 @@ class AnimatedSprite:
         self.frame = 0
         self.animation_timer = 0
         self.animation_loop = True
-        self.new_animation()
+        self.new_animation("default",pygame.Surface((100,100)),(0,0),(100,100),1,1,1,(0,0))
         self.x = 0
         self.y = 0
         self.current_animation = None
-        
+        self.set_animation("default")
+
     def new_animation(self,name: str,spritesheet: pygame.Surface,
                       start: list,dimensions: list,frames: int,speed: int,end: str,offset: tuple):
         '''
@@ -73,8 +73,8 @@ class AnimatedSprite:
         self.set_animation(self.current_animation["end"])
         self.play_animation()
 
-    def draw(self,screen):
-        screen.blit(self.image,(self.rect.x+self.current_animation["offset"][0]-camera.x, self.rect.y+self.current_animation["offset"][1]-camera.y))
+    def draw(self,screen,offset=[0,0]):
+        screen.blit(self.image,(self.rect.x+self.current_animation["offset"][0]-offset[0], self.rect.y+self.current_animation["offset"][1]-offset[1]))
     
     def update(self):
         self.play_animation()

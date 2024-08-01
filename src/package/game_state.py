@@ -7,12 +7,16 @@ pygame.mixer.init()
 class GameState():
     def __init__(self):
         self.next_state = None
+        self.active_keys = set(())
         
     def enter(self):
         self.next_state = None
                 
     def event_handle(self,event):
-        pass
+        if event.type == pygame.KEYDOWN:
+            self.active_keys.add(event.key)
+        elif event.type == pygame.KEYUP:
+            self.active_keys.remove(event.key)
         
     def update(self):
         pass
