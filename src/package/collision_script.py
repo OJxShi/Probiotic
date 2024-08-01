@@ -17,10 +17,10 @@ class Collider:
             else:
                 poi = rect.bottomright
 
-            if self.slope[0] == 0:
+            if self.slope[0] == 0: #handling horizontal slopes (0 division error)
                 x = poi[0]
                 y = self.line[0][1]
-            elif self.slope[0] == "v":
+            elif self.slope[0] == "v": #handling vertical slopes (0 division error)
                 x = self.line[0][0]
                 y = poi[1]
             else:

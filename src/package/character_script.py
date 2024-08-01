@@ -54,7 +54,7 @@ class Player(Character):
             pygame.K_LEFT:"walk_left",
             pygame.K_RIGHT:"walk_right",
             pygame.K_UP:"jump"
-        }
+        } # To be implemented: easy way to add actions and bind to different keys...
     
     def input(self,input):        
         if pygame.K_LEFT in input:
