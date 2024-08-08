@@ -9,13 +9,13 @@ class Collider:
     def collide(self,rect: pygame.Rect):
         if rect.clipline(self.line):
             if self.normal < math.pi/2:
-                poi = rect.topleft
-            elif self.normal < 0:
-                poi = rect.topright
-            elif self.normal > math.pi/2:
-                poi = rect.bottomleft
-            else:
                 poi = rect.bottomright
+            elif self.normal < math.pi:
+                poi = rect.bottomleft
+            elif self.normal < math.pi*3/2:
+                poi = rect.topleft
+            else: 
+                poi = rect.topright
 
             if self.slope[0] == 0: #handling horizontal slopes (0 division error)
                 x = poi[0]
@@ -32,6 +32,12 @@ class Collider:
             
             x_offset = x-poi[0]
             y_offset = y-poi[1]
+            
+            if x_offset >= 1:
+                x_offset += 1
+            elif x_offset <= -1:
+                x_offset -= 1
+
             # x_offset = round(-math.cos(self.normal)*rect.width/2,2)
             # y_offset = round(-math.sin(self.normal)*rect.height/2,2)
             # print(x_offset, y_offset)
@@ -53,7 +59,7 @@ class Collider:
         x1,y1 = self.line[0]
         x2,y2 = self.line[1]
         angle = math.atan2((y2-y1),(x2-x1))+math.pi/2
-        # print(angle)
+        angle = angle%(math.pi*2)
         return angle
 
     def reverse_normals(self):
@@ -92,10 +98,15 @@ class ColliderPolygon:
         self.calculate_lines()
     
     def collide(self,rect: pygame.Rect):
+        x_offset = 0
+        y_offset = 0
         for line in self.lines:
-            collison = line.collide(rect)
-            if collison:
-                return collison
+            collision = line.collide(rect)
+            if collision:
+                # return collision
+                x_offset += collision[0]
+                y_offset += collision[1]
+        return x_offset,y_offset
     
     def draw(self,screen):
         for line in self.lines:
