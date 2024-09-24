@@ -45,21 +45,3 @@ class Character(AnimatedSprite):
     
     def update(self):
         AnimatedSprite.update(self)
-
-
-class Player(Character):
-    def __init__(self):
-        Character.__init__(self)
-        self.actions = {
-            pygame.K_LEFT:"walk_left",
-            pygame.K_RIGHT:"walk_right",
-            pygame.K_UP:"jump"
-        } # To be implemented: easy way to add actions and bind to different keys...
-    
-    def input(self,input):        
-        if pygame.K_LEFT in input:
-            self.x -= 10
-        if pygame.K_RIGHT in input:
-            self.x += 10
-        if pygame.K_UP in input:
-            self.velo_y = -15
